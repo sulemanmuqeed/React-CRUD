@@ -91,7 +91,7 @@ function AddEditForm(props) {
       </FormGroup>
       <FormGroup className="mb-3" controlId="description">
         <FormLabel>Description</FormLabel>
-        <FormControl type="text" name="description" onChange={onChange} value={form.description === null ? '' : form.description} required />
+        <FormControl as="textarea" rows={3} name="description" onChange={onChange} value={form.description === null ? '' : form.description} required />
       </FormGroup>
       <Button type="submit">Submit</Button>
     </Form>
