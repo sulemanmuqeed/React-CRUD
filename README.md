@@ -1,7 +1,9 @@
-# A basic react app to manage your collection of seashells
+## A basic react app to manage your collection of seashells
 
-## Technologies Used
+### Technologies Used
 
 React
+
 Bootstrap
+
 Redux
