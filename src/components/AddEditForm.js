@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form, FormGroup, FormLabel, FormControl } from 'react-bootstrap';
+import { Button, Form, FormGroup, FormLabel, FormControl, Spinner } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux'
 import { addSeashell, updateSeashell } from '../features/seashell/seashellEffects';
 import { resetSubmitState } from '../features/seashell/seashellSlice';
@@ -86,7 +86,7 @@ function AddEditForm(props) {
       </FormGroup>
       <Button type="submit" onClick={() => setAddAnother(false)} className="me-3">Submit</Button>
       {!props.item ? <Button type="submit" onClick={() => setAddAnother(true)}>Save and add another</Button> : null}
-      {isSubmitting ? (<p>Saving please wait...</p>) : null}
+      {isSubmitting ? (<div><Spinner animation="border" size="sm" /> Saving please wait</div>) : null}
     </Form>
   );
 }
