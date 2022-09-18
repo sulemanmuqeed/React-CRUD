@@ -9,7 +9,6 @@ function ModalForm(props) {
     setModal(!modal)
   }
 
-  const closeBtn = <button className="close" onClick={toggle}>&times;</button>
   const label = props.buttonLabel
 
   let button = ''
@@ -39,8 +38,6 @@ function ModalForm(props) {
         <Modal.Header closeButton={true}><Modal.Title>{title}</Modal.Title></Modal.Header>
         <Modal.Body>
           <AddEditForm
-            addItemToState={props.addItemToState}
-            updateState={props.updateState}
             toggle={toggle}
             item={props.item} />
         </Modal.Body>

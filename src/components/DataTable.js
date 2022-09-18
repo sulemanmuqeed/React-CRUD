@@ -24,7 +24,7 @@ function DataTable(props) {
         <td className='text-truncate' style={{maxWidth: 300}}>{item.description}</td>
         <td>
           <div style={{ width: "110px" }}>
-            <ModalForm buttonLabel="Edit" item={item} updateState={props.updateState} />
+            <ModalForm buttonLabel="Edit" item={item} />
             {' '}
             <Button variant="danger" onClick={() => deleteItem(item.id)}>Del</Button>
           </div>

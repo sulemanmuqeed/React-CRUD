@@ -28,7 +28,7 @@ function App() {
       </Row>
       <Row>
           <Col>
-            <ModalForm buttonLabel="Add Item" addItemToState={addItemToState}/>
+            <ModalForm buttonLabel="Add Item" />
           </Col>
         </Row>
     </Container>
