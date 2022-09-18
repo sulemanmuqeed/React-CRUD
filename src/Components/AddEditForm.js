@@ -83,15 +83,15 @@ function AddEditForm(props) {
     <Form onSubmit={props.item ? submitFormEdit : submitFormAdd}>
       <FormGroup className="mb-3" controlId="name">
         <FormLabel>Name</FormLabel>
-        <FormControl type="text" name="name" onChange={onChange} value={form.name === null ? '' : form.name} />
+        <FormControl type="text" name="name" onChange={onChange} value={form.name === null ? '' : form.name} required />
       </FormGroup>
       <FormGroup className="mb-3" controlId="species">
         <FormLabel>Species</FormLabel>
-        <FormControl type="text" name="species" onChange={onChange} value={form.species === null ? '' : form.species} />
+        <FormControl type="text" name="species" onChange={onChange} value={form.species === null ? '' : form.species} required />
       </FormGroup>
       <FormGroup className="mb-3" controlId="description">
         <FormLabel>Description</FormLabel>
-        <FormControl type="text" name="description" onChange={onChange} value={form.description === null ? '' : form.description} />
+        <FormControl type="text" name="description" onChange={onChange} value={form.description === null ? '' : form.description} required />
       </FormGroup>
       <Button type="submit">Submit</Button>
     </Form>
