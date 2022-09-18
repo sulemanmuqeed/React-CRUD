@@ -1,22 +1,17 @@
-import React from 'react';
-import { Table, Button } from 'react-bootstrap';
-import ModalForm from './Modal';
+import React from 'react'
+import { Table, Button } from 'react-bootstrap'
+import ModalForm from './Modal'
+import { useDispatch } from 'react-redux'
+import { deleteSeashell } from '../features/seashell/seashellEffects'
 
 function DataTable(props) {
+
+  const dispatch = useDispatch()
+
   const deleteItem = id => {
     let confirmDelete = window.confirm('Delete item forever?')
     if (confirmDelete) {
-      fetch('http://localhost:3000/seashells/' + id, {
-        method: 'delete',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-        .then(response => response.json())
-        .then(item => {
-          props.deleteItemFromState(id)
-        })
-        .catch(err => console.log(err))
+      dispatch(deleteSeashell(id))
     }
   }
 

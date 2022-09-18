@@ -1,39 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import DataTable from './Components/DataTable';
-import ModalForm from './Components/Modal';
+import React, { useState, useEffect } from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
+import DataTable from './components/DataTable'
+import ModalForm from './components/Modal'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchSeashells } from './features/seashell/seashellEffects'
 
 function App() {
 
-  const [items, setItems] = useState([])
-
-  const getItems = () => {
-    fetch('http://localhost:3000/seashells')
-      .then(response => response.json())
-      .then(items => setItems(items))
-      .catch(err => console.log(err))
-  }
-
-  const addItemToState = (item) => {
-    setItems([...items, item])
-  }
-
-
-  const updateState = (item) => {
-    console.log("adasdasd")
-    const itemIndex = items.findIndex(data => data.id === item.id)
-    const newArray = [...items.slice(0, itemIndex), item, ...items.slice(itemIndex + 1)]
-    setItems(newArray)
-  }
-
-  const deleteItemFromState = (id) => {
-    const updatedItems = items.filter(item => item.id !== id)
-    setItems(updatedItems)
-  }
+  const dispatch = useDispatch()
+  const items = useSelector((state) => state.seashell.value)
 
   useEffect(() => {
-    getItems()
-  }, []);
+    dispatch(fetchSeashells())
+  }, [])
 
   return (
     <Container className="App">
@@ -44,7 +23,7 @@ function App() {
       </Row>
       <Row>
         <Col>
-          <DataTable items={items} updateState={updateState} deleteItemFromState={deleteItemFromState} />
+          <DataTable items={items} />
         </Col>
       </Row>
       <Row>

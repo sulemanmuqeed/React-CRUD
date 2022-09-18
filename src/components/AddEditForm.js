@@ -1,13 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, FormGroup, FormLabel, FormControl } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux'
+import { addSeashell, updateSeashell } from '../features/seashell/seashellEffects';
+import { resetSubmitState } from '../features/seashell/seashellSlice';
 
 function AddEditForm(props) {
+
+  const dispatch = useDispatch();
+
   const [form, setValues] = useState({
     id: 0,
     name: '',
     species: '',
     description: '',
   })
+
+  const [addAnother, setAddAnother] = useState(false)
+
+  const isSubmitting = useSelector((state) => state.seashell.loading.submit === 'pending')
+  const isCompleted = useSelector((state) => state.seashell.loading.submit === 'completed')
+
+  useEffect(() => {
+    if (isCompleted) {
+      if (addAnother) {
+        setValues({
+          id: 0,
+          name: '',
+          species: '',
+          description: '',
+        })
+      } else {
+        props.toggle()
+      }
+      dispatch(resetSubmitState())
+    }
+  }, [isCompleted])
 
   const onChange = e => {
     setValues({
@@ -18,49 +45,13 @@ function AddEditForm(props) {
 
   const submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://localhost:3000/seashells', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: form.name,
-        species: form.species,
-        description: form.description,
-      })
-    })
-      .then(response => response.json())
-      .then(item => {
-        if (item.hasOwnProperty('id')) {
-          props.addItemToState(item)
-          props.toggle()
-        } else {
-          console.log('failure')
-        }
-      })
-      .catch(err => console.log(err))
+    dispatch(addSeashell(getFormData()))
   }
 
   const submitFormEdit = e => {
     e.preventDefault()
     const data = getFormData();
-    fetch('http://localhost:3000/seashells/' + form.id, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(item => {
-        if (item.affected) {
-          props.updateState(data)
-          props.toggle()
-        } else {
-          console.log('failure')
-        }
-      })
-      .catch(err => console.log(err))
+    dispatch(updateSeashell({ id: form.id, data }))
   }
 
   const getFormData = () => {
@@ -93,7 +84,9 @@ function AddEditForm(props) {
         <FormLabel>Description</FormLabel>
         <FormControl as="textarea" rows={3} name="description" onChange={onChange} value={form.description === null ? '' : form.description} required />
       </FormGroup>
-      <Button type="submit">Submit</Button>
+      <Button type="submit" onClick={() => setAddAnother(false)} className="me-3">Submit</Button>
+      {!props.item ? <Button type="submit" onClick={() => setAddAnother(true)}>Save and add another</Button> : null}
+      {isSubmitting ? (<p>Saving please wait...</p>) : null}
     </Form>
   );
 }
